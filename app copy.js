@@ -25,13 +25,10 @@ const Product = mongoose.model('Product', productSchema)
 
 // route
 const api = process.env.API_URL;
-app.get(`${api}/products`, (req, res) => {
-    const product = {
-        id:1,
-        name:'test',
-        image: 'asdsa',
-    }
-    res.send(product);
+
+app.get(`${api}/products`, async (req, res) => {
+    const productList = await Product.find();
+    res.send(productList);
 });
 
 app.post(`${api}/products`, (req, res) =>{
