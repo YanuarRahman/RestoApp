@@ -1,10 +1,16 @@
 import mongoose from "mongoose";
 
 const categorySchema = mongoose.Schema({
-    name:String,
-    image:String,
-});
+   name: {
+        type: String,
+        required: true
+    },
+    foodType:{
+        type: String,
+        required: true
+    },
+})
 
-const Category = mongoose.model('Categories', categorySchema);
+const Category = mongoose.model('Category', categorySchema);
 
 export default Category
