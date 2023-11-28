@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Category from "./CategoryModels.js";
 
 const productSchema = mongoose.Schema({
     name: {
@@ -39,16 +40,21 @@ const productSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    isFeatured: {
-        type: Boolean,
-        default: false
-    },
     dateCreated: {
         type: Date,
         default: Date.now,
     },    
 
 });
+
+// parsing _id become id 
+productSchema.virtual('id').get(function (){
+    return this._id.toHexString();
+});
+
+productSchema.set('toJSON', {
+    virtuals:true,
+})
 
 const Product = mongoose.model('Product', productSchema);
 

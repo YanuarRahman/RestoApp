@@ -9,6 +9,15 @@ const getData = async (req, res) => {
     res.send(CategoryList);
 };
 
+const detailData = async(req,res)=>{
+    const category = await Category.findById(req.params.id);
+
+    if(!category) {
+        res.status(500).json({message: 'The category with the given ID was not found.'})
+    } 
+    res.status(200).send(category);
+};
+
 const addData = async(req, res) =>{
         let category = new Category({
             name: req.body.name,
@@ -17,7 +26,7 @@ const addData = async(req, res) =>{
         category = await category.save();
     
         if(!category)
-        return res.status(404).send('Category Tidak Bisa Dibuat!!');
+        return res.status(404).send('Category Failed Created');
     
         res.send(category);
     };
@@ -40,7 +49,7 @@ const updateData =  async(req, res)=> {
 };
 
 
-let deleteData = (req, res)=>{
+const deleteData = (req, res)=>{
     Category.findByIdAndDelete(req.params.id).then(category =>{
         if(category) {
             return res.status(200).json({success: true, message: 'the category is deleted!'})
@@ -53,4 +62,4 @@ let deleteData = (req, res)=>{
 };
 
 
-export {getData, addData, updateData, deleteData}
+export {getData, addData, updateData, deleteData, detailData}
